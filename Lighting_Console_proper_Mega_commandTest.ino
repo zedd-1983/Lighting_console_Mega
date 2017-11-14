@@ -11,6 +11,7 @@
 #define         SUB                 's'
 #define         CUE                 'c'
 
+
 void setup() {
 
   pinMode(SUB1, INPUT);
@@ -23,6 +24,9 @@ void setup() {
 
   Serial.begin(115200);
   Serial.setTimeout(50);
+
+
+
 }
 
 void loop() {
@@ -30,15 +34,15 @@ void loop() {
   int subs[NUMBER_OF_SUBS] = {SUB1, SUB2, SUB3, SUB4};                                                    // array to iterate through when reading the faders
 
   String commandArray = "";
-                                                                               // initialize empty string array
+
 
   if(Serial.available())
   {
-      commandArray = Serial.readString();                                                                 // read incoming characters and save them into commandArray
+      commandArray = Serial.readString();                                      // read incoming characters and save them into commandArray
 
-      if(commandArray[0] == RECORD)                                                                       // RECORD COMMANDS
+      if(commandArray[0] == RECORD)                                            // RECORD COMMANDS
       {
-        if(commandArray[1] == SUB)                                                                        // SAVING SUBS
+        if(commandArray[1] == SUB)                                             // SAVING SUBS
         {
           if(commandArray[3] == '1' && commandArray[4] == 'X') {}
             // save Sub 1
@@ -61,7 +65,7 @@ void loop() {
           else if(commandArray[3] == '1' && commandArray[4] == '0' && commandArray[5] == 'X')  {}
             // save Sub 10
         }
-        else if(commandArray[1] == CUE)                                                                   // SAVING CUES
+        else if(commandArray[1] == CUE)                                        // SAVING CUES
           {
             // save cues based on the number provided
             // in commandArray[2 and 3] --> up to 99 cues
@@ -70,7 +74,7 @@ void loop() {
       }
   }
 
-  for(int i = 0; i < NUMBER_OF_SUBS; i++)                                                                 // read values of faders and send it to Qt
+  for(int i = 0; i < NUMBER_OF_SUBS; i++)                                      // read values of faders and send it to Qt
   {
     int subValue = analogRead(subs[i]);
     Serial.print(subValue/4);
